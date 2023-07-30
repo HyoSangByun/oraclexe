@@ -6,5 +6,38 @@ ORDER BY 절
         ASC : 오름차순, 기본값
         DESC : 내림차순
     SELECT 문의 맨 마지막에 온다.
+    
+[SELECT 문 기본형식]
+SELECT (DISTICNT) | 컬럼명1, 컬럼명2 ...            .5
+FROM 테이블명                                      .1
+WHERE 조건절                                       .2
+GROUP BY 컬럼명                                    .3
+HAVING 조건절                                      .4
+ORDER BY 컬럼명 [ASC|DESC]                         .6
 
+그래서 별칭은 ORDER BY는 사용 가능하나 조건절은 사용불가
 */
+SELECT last_name, job_id, department_id, hire_date
+FROM employees
+ORDER BY hire_date;
+
+-- 내림차순 정렬
+SELECT last_name, job_id, department_id, hire_date
+FROM employees
+ORDER BY hire_date DESC;
+
+--열 alias를 기준으로 정렬
+SELECT employee_id, last_name, salary*12 annsal
+FROM employees
+ORDER BY annsal;
+
+-- 열 숫자 위치를 사용하여 정렬
+SELECT last_name, job_id, department_id, hire_date
+FROM employees
+ORDER BY 3;
+
+--여러 열을 기준으로 정렬
+SELECT last_name, job_id, department_id, salary
+FROM employees
+ORDER BY department_id, salary DESC;
+
