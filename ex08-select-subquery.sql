@@ -60,7 +60,13 @@ WHERE emp.employee_ID NOT IN
                         (SELECT mgr.manager_id
                         FROM employees mgr);
 
-
+SELECT emp.last_name
+FROM employees emp
+WHERE 1= 1
+AND emp.employee_id <> null
+AND  emp.employee_id <> 100
+AND emp.employee_id <> 102
+AND emp.employee_id <> 103;
 
 
 
