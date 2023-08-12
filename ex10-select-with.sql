@@ -32,10 +32,20 @@ AND d.department_id = 20
 ;
 --중복된 코드 내용을 쓰는 것보다 WITH절을 쓰는게 더 좋다.
 
+WITH RecursiveCTE (id, name, manager_id, depth) AS (
+    SELECT employee_id, last_name, manager_id, 0
+    FROM employees
+    WHERE manager_id IS NULL -- 최상위 매니저
+    UNION ALL
+    SELECT e.employee_id, e.last_name, e.manager_id, rc.depth + 1
+    FROM employees e
+    INNER JOIN RecursiveCTE rc on e.manager_id = rc.id
+)
+SELECT id, name, manager_id, depth
+FROM RecursiveCTE ;
 
-
-
-
+-- 먼저 CTE에 KING이 들어가고 manager_id가 KING(100)인 사원들이 depth +1 되어 들어가고
+-- 재귀적으로 반복되는 구조임.
 
 
 
