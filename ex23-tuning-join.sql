@@ -27,7 +27,7 @@ WHERE E.deptno = D.deptno;
 
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));
 
-
+--drive table 선택이 중요하다. 근데 웬만하면 optimizer가 알아서 선택해줌
 /*
 SORT MERGE
     각 테이블로부터 동시에 독립적으로
