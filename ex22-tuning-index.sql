@@ -15,6 +15,8 @@ FROM products p
 WHERE prodno = 11000;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));
 
+--인덱스 걸어주면 buffer 갯수가 3이지만 안 걸면 buffer 갯수가 373이다.
+--무작정 인덱스를 걸면 오버헤드가 발생할 수 있다.
 
 /*
 FULL TABLE SCAN
@@ -106,26 +108,26 @@ CREATE INDEX orders_custno_idx ON orders(custno);
 SELECT /*+ FULL(orders) */ MAX(orderdate)
 FROM orders
 WHERE custno BETWEEN 1 AND 100;
-
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));
-
+--33429
 
 SELECT /*+ INDEX(orders orders_custno_idx) */ MAX(orderdate)
 FROM orders
 WHERE custno BETWEEN 1 AND 100;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));
-
+--956
 
 SELECT /*+ FULL(orders) */ MAX(orderdate)
 FROM orders
 WHERE custno BETWEEN 1 AND 5000;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));
+--33429
 
 SELECT /*+ INDEX(orders orders_custno_idx) */ MAX(orderdate)
 FROM orders
 WHERE custno BETWEEN 1 AND 5000;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));
-
+--50088
 
 /*
 INDEX FAST FULL SCAN
